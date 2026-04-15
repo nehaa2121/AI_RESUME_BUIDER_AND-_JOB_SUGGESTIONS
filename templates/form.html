@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Resume</title>
+
+    <style>
+        body{
+            font-family: Arial;
+            padding: 20px;
+            background:linear-gradient(to right, #667eea, #764ba2);
+        }
+
+        .container{
+            max-width: 600px;
+            margin: auto;
+        }
+
+        input, textarea, select{
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-button: 15px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        button{
+            padding: 10px;
+            width: 100%;
+            background: #8196f2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover{
+            background: #201274;
+        }
+        .template{
+            border:1px solid #ccc;
+             padding:10px; 
+             border-radius:6px;
+        }
+        <style>
+label {
+    display: block;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    display: none; /* hide default radio button */
+}
+
+.template {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    transition: transform 0.3s, border-color 0.3s;
+    text-align: center;
+}
+
+label input[type="radio"]:checked + .template {
+    border-color: #667eea;
+    transform: scale(1.05);
+}
+
+.template img {
+    max-width: 100%;
+    border-radius: 10px;
+    height:300px;
+    width:300px;
+}
+</style>
+ 
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Create Your Resume</h1>
+
+    <form action="/generate_resume" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="template" value="{{ template }}">
+
+        <!-- PERSONAL -->
+        <h3>Personal Details</h3>
+
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="phone" placeholder="Phone" required>
+        <input type="text" name="address" placeholder="Address" required>
+
+        <!-- EDUCATION -->
+        <h3>Education</h3>
+
+        <input type="text" name="degree" placeholder="Degree (BCA, Bcom, etc)" required>
+        <input type="text" name="college" placeholder="College Name" required>
+        <input type="text" name="year" placeholder="Year (2026)" required>
+
+        <!-- SKILLS -->
+        <h3>Skills</h3>
+
+        <input type="text" name="skills" placeholder="e.g. HTML, CSS, Python" required>
+
+        <!-- PROJECTS -->
+        <h3>Projects</h3>
+
+        <textarea name="projects" placeholder="Describe your projects"></textarea>
+
+        <!-- EXPERIENCE -->
+        <h3>Experience</h3>
+
+        <textarea name="experience" placeholder="Internship / Work Experience"></textarea>
+
+        <h3>Languages</h3>
+        <textarea name="languages" placeholder="Languages Known"></textarea>
+
+        <h3>Certifications</h3>
+        <textarea name="certifications" placeholder="Certifications"></textarea>
+
+        <h3>Achievements</h3>
+        <textarea name="achievements" placeholder="Achievement"></textarea>
+
+        <h3>LinkedIn</h3>
+        <input type="text" name="linkedin" placeholder="LinkedIn Profile">
+
+        <h3>GitHub</h3>
+        <input type="text" name="github" placeholder="GitHub Profile">
+        <br>
+        <h3>Choose Resume Theme Color</h3>
+        <select name="theme_color">
+            <option value="#667eea">Blue</option>
+            <option value="#28a745">Green</option>
+            <option value="#dc3545">Red</option>
+            <option value="#000000">Black</option>
+            <option value="#6f42c1">Purple</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Generate Resume</button>
+
+        <br><br>
+
+        <!-- TEMPLATE 
+      <h3>Select Template</h3>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:10px;">
+    <label>
+        <input type="radio" name="template" value="simple" checked>
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/simple.png') }}">
+            <p>Simple</p>
+        </div>
+    </label>
+
+    <label>
+        <input type="radio" name="template" value="modern_blue">
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/modern_blue.png') }}">
+            <p>Modern Blue</p>
+        </div>
+    </label>
+
+    <label>
+        <input type="radio" name="template" value="modern_dark">
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/modern_dark.png') }}">
+            <p>Modern Dark</p>
+        </div>
+    </label>
+
+    <label>
+        <input type="radio" name="template" value="card_ui">
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/card_ui.png') }}">
+            <p>Card-ui</p>
+        </div>
+    </label>
+
+    <label>
+        <input type="radio" name="template" value="bold_red">
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/bold_red.png') }}">
+            <p>Bold-red</p>
+        </div>
+    </label>
+
+
+    <label>
+        <input type="radio" name="template" value="professional_green">
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/professional_green.png') }}">
+            <p>Professional-green</p>
+        </div>
+    </label>
+
+     <label>
+        <input type="radio" name="template" value="classic_resume">
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/classic_resume.png') }}">
+            <p>Classic-resume</p>
+        </div>
+    </label>
+
+     <label>
+        <input type="radio" name="template" value="creative_gradient">
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/creative_gradient.png') }}">
+            <p>Creative-gradient</p>
+        </div>
+    </label>
+
+    <label>
+        <input type="radio" name="template" value="elegant_gray">
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/elegant_gray.png') }}">
+            <p>Elegant-gray</p>
+        </div>
+    </label>
+
+    <label>
+        <input type="radio" name="template" value="minimal_white">
+        <div class="template">
+            <img src="{{ url_for('static', filename='templates/minimal_white.png') }}">
+            <p>Minimal-White</p>
+        </div>
+    </label>
+    -->
+
+
+    
+
+</div>
+        <br><br>
+
+        
+
+    </form>
+</div>
+
+</body>
+</html>

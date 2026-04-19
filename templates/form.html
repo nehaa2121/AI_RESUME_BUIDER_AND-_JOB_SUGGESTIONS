@@ -3,75 +3,118 @@
 <head>
     <title>Create Resume</title>
 
-    <style>
-        body{
-            font-family: Arial;
-            padding: 20px;
-            background:linear-gradient(to right, #667eea, #764ba2);
-        }
+<style>
 
-        .container{
-            max-width: 600px;
-            margin: auto;
-        }
-
-        input, textarea, select{
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-button: 15px;
-            border-radius: 10px;
-            border: none;
-        }
-
-        button{
-            padding: 10px;
-            width: 100%;
-            background: #8196f2;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        button:hover{
-            background: #201274;
-        }
-        .template{
-            border:1px solid #ccc;
-             padding:10px; 
-             border-radius:6px;
-        }
-        <style>
-label {
-    display: block;
-    cursor: pointer;
+/* BODY */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(to right, #667eea, #764ba2);
 }
 
-input[type="radio"] {
-    display: none; /* hide default radio button */
+/* CONTAINER */
+.container {
+    max-width: 1100px;
+    margin: auto;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-.template {
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
-    transition: transform 0.3s, border-color 0.3s;
+/* HEADINGS */
+h1 {
     text-align: center;
+    margin-bottom: 20px;
 }
 
-label input[type="radio"]:checked + .template {
+h3 {
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/* GRID FIXED */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+/* FORCE VERTICAL STACK (IMPORTANT FIX) */
+.form-grid > div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* INPUTS */
+input, textarea, select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #f9fafb;
+    font-size: 14px;
+    display: block;
+}
+
+/* TEXTAREA */
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* FOCUS EFFECT */
+input:focus, textarea:focus, select:focus {
     border-color: #667eea;
-    transform: scale(1.05);
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(102,126,234,0.3);
 }
 
-.template img {
-    max-width: 100%;
-    border-radius: 10px;
-    height:300px;
-    width:300px;
+/* CENTER SECTION */
+.center-section {
+    text-align: center;
+    margin-top: 30px;
 }
+
+/* SELECT CENTER */
+.center-section select {
+    width: 300px;
+}
+
+/* BUTTON */
+button {
+    padding: 12px;
+    width: 300px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+/* BUTTON HOVER */
+button:hover {
+    background: #4f5bd5;
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    button, .center-section select {
+        width: 100%;
+    }
+}
+
 </style>
- 
 </head>
 
 <body>
@@ -79,160 +122,70 @@ label input[type="radio"]:checked + .template {
 <div class="container">
     <h1>Create Your Resume</h1>
 
-    <form action="/generate_resume" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="template" value="{{ template }}">
+    <form action="/generate_resume" method="POST">
 
-        <!-- PERSONAL -->
-        <h3>Personal Details</h3>
+    <input type="hidden" name="template" value="{{ template }}">
 
-        <input type="text" name="name" placeholder="Full Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="text" name="phone" placeholder="Phone" required>
-        <input type="text" name="address" placeholder="Address" required>
+    <div class="form-grid">
 
-        <!-- EDUCATION -->
-        <h3>Education</h3>
+        <!-- LEFT -->
+        <div>
 
-        <input type="text" name="degree" placeholder="Degree (BCA, Bcom, etc)" required>
-        <input type="text" name="college" placeholder="College Name" required>
-        <input type="text" name="year" placeholder="Year (2026)" required>
+            <h3>Personal Details</h3>
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="phone" placeholder="Phone" required>
+            <input type="text" name="address" placeholder="Address" required>
 
-        <!-- SKILLS -->
-        <h3>Skills</h3>
+            <h3>Education</h3>
+            <input type="text" name="degree" placeholder="Degree" required>
+            <input type="text" name="college" placeholder="College" required>
+            <input type="text" name="year" placeholder="Year" required>
 
-        <input type="text" name="skills" placeholder="e.g. HTML, CSS, Python" required>
+            <h3>Skills</h3>
+            <input type="text" name="skills" placeholder="Skills">
 
-        <!-- PROJECTS -->
-        <h3>Projects</h3>
+            <h3>Projects</h3>
+            <textarea name="projects" placeholder="Projects"></textarea>
 
-        <textarea name="projects" placeholder="Describe your projects"></textarea>
+        </div>
 
-        <!-- EXPERIENCE -->
-        <h3>Experience</h3>
+        <!-- RIGHT -->
+        <div>
 
-        <textarea name="experience" placeholder="Internship / Work Experience"></textarea>
+            <h3>Experience</h3>
+            <textarea name="experience" placeholder="Experience"></textarea>
 
-        <h3>Languages</h3>
-        <textarea name="languages" placeholder="Languages Known"></textarea>
+            <h3>Certifications</h3>
+            <textarea name="certifications" placeholder="Certifications"></textarea>
 
-        <h3>Certifications</h3>
-        <textarea name="certifications" placeholder="Certifications"></textarea>
+            <h3>Achievements</h3>
+            <textarea name="achievements" placeholder="Achievements"></textarea>
 
-        <h3>Achievements</h3>
-        <textarea name="achievements" placeholder="Achievement"></textarea>
+            <h3>LinkedIn</h3>
+            <input type="text" name="linkedin" placeholder="LinkedIn Profile">
 
-        <h3>LinkedIn</h3>
-        <input type="text" name="linkedin" placeholder="LinkedIn Profile">
+        </div>
 
-        <h3>GitHub</h3>
-        <input type="text" name="github" placeholder="GitHub Profile">
-        <br>
-        <h3>Choose Resume Theme Color</h3>
+    </div>
+
+    <!-- BOTTOM CENTER -->
+    <div class="center-section">
+
+        <h3>Theme Color</h3>
+
         <select name="theme_color">
             <option value="#667eea">Blue</option>
             <option value="#28a745">Green</option>
             <option value="#dc3545">Red</option>
             <option value="#000000">Black</option>
-            <option value="#6f42c1">Purple</option>
         </select>
+
         <br><br>
 
         <button type="submit">Generate Resume</button>
 
-        <br><br>
-
-        <!-- TEMPLATE 
-      <h3>Select Template</h3>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:10px;">
-    <label>
-        <input type="radio" name="template" value="simple" checked>
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/simple.png') }}">
-            <p>Simple</p>
-        </div>
-    </label>
-
-    <label>
-        <input type="radio" name="template" value="modern_blue">
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/modern_blue.png') }}">
-            <p>Modern Blue</p>
-        </div>
-    </label>
-
-    <label>
-        <input type="radio" name="template" value="modern_dark">
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/modern_dark.png') }}">
-            <p>Modern Dark</p>
-        </div>
-    </label>
-
-    <label>
-        <input type="radio" name="template" value="card_ui">
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/card_ui.png') }}">
-            <p>Card-ui</p>
-        </div>
-    </label>
-
-    <label>
-        <input type="radio" name="template" value="bold_red">
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/bold_red.png') }}">
-            <p>Bold-red</p>
-        </div>
-    </label>
-
-
-    <label>
-        <input type="radio" name="template" value="professional_green">
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/professional_green.png') }}">
-            <p>Professional-green</p>
-        </div>
-    </label>
-
-     <label>
-        <input type="radio" name="template" value="classic_resume">
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/classic_resume.png') }}">
-            <p>Classic-resume</p>
-        </div>
-    </label>
-
-     <label>
-        <input type="radio" name="template" value="creative_gradient">
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/creative_gradient.png') }}">
-            <p>Creative-gradient</p>
-        </div>
-    </label>
-
-    <label>
-        <input type="radio" name="template" value="elegant_gray">
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/elegant_gray.png') }}">
-            <p>Elegant-gray</p>
-        </div>
-    </label>
-
-    <label>
-        <input type="radio" name="template" value="minimal_white">
-        <div class="template">
-            <img src="{{ url_for('static', filename='templates/minimal_white.png') }}">
-            <p>Minimal-White</p>
-        </div>
-    </label>
-    -->
-
-
-    
-
-</div>
-        <br><br>
-
-        
+    </div>
 
     </form>
 </div>

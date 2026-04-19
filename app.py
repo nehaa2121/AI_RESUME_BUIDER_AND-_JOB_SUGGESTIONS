@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.secret_key = "mysecretkey123"
 
 
-os.environ["GEMINI_API_KEY"] = "AIzaSyB1xZ8bEQvP5Lh8O-S9mMvQEhz_r8dZIjA"
+
 client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 # ---------------- HOME ----------------
@@ -76,6 +76,8 @@ def dashboard():
 
     conn.close()
     return render_template("dashboard.html", resumes=resumes)
+
+
 #--------templates--------
 @app.route("/templates")
 def templates():
@@ -255,30 +257,6 @@ def generate_resume():
         ai_skills=ai_skills
     )
 
-# ---------------- JOB LOGIC ----------------
-job_skills = {
-    "Frontend Developer": ["html", "css", "javascript"],
-    "Python Developer": ["python", "flask", "sql"]
-}
-
-def suggest_jobs(skills, degree):
-    skills = (skills or "").lower()
-    degree = (degree or "").lower()
-    jobs = []
-
-    # Logic for Government/High-Paying roles based on your goals
-    if "mca" in degree or "python" in skills:
-        jobs.append("Software Engineer (NIC/ISRO)")
-    
-    if "react" in skills or "javascript" in skills:
-        jobs.append("Frontend Developer")
-        
-    if "sql" in skills or "dbms" in skills:
-        jobs.append("Database Administrator")
-
-    return jobs if jobs else ["IT Trainee"]
-
-
 # ---------------- AI ANALYSIS PAGE ----------------
 @app.route("/ai_analysis")
 def ai_analysis():
@@ -294,17 +272,16 @@ def ai_analysis():
 
     ai_output = ai_resume_improvement(skills, projects, experience)
     ai_skills = ai_skill_suggestions(skills, degree)
-    jobs = suggest_jobs(skills, degree)
+    
 
     print("AI OUTPUT:", ai_output)
     print("AI SKILLS:", ai_skills)
-    print("JOBS:", jobs)
+
 
     return render_template(
         "ai_analysis.html",
         ai_output=ai_output,
         ai_skills=ai_skills,
-        jobs=jobs,
         suggestions=[
             "Add more projects",
             "Use strong action verbs",
@@ -370,4 +347,5 @@ def logout():
 
 # ---------------- RUN ----------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
